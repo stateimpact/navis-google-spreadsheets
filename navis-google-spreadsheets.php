@@ -30,9 +30,15 @@ define( 'NAVIS_SPREADSHEETS_ROOT', WP_PLUGIN_DIR . '/' . dirname(__FILE__) );
 
 class Navis_Google_Spreadsheets {
     
+    static $include_tablesorter;
+    
     function __construct() {
         
+        add_action('init', array(&$this, 'add_stylesheet'));
+        
         add_action('save_post', array(&$this, 'save'));
+        
+        add_filter('wp_footer', array(&$this, 'include_dependencies'));
         
         add_shortcode('spreadsheet', array(&$this, 'shortcode'));
         
@@ -134,6 +140,7 @@ class Navis_Google_Spreadsheets {
 
     function shortcode($atts, $content = null) {
         global $post;
+        self::$include_tablesorter = true;
         
         $options = shortcode_atts(array(
             'key'      => null,                // Google Doc ID
@@ -148,6 +155,31 @@ class Navis_Google_Spreadsheets {
         
         $rows = get_post_meta($post->ID, $url, true);
         if ($rows) return $this->render_table($rows, $options, $content);
+    }
+    
+    function add_stylesheet() {
+        $css = plugins_url( 'css/style.css', __FILE__);
+        wp_enqueue_style(
+            'tablesorter', $css, array(), '2.0.5'
+        );
+    }
+    
+    function include_dependencies() {
+        if (!self::$include_tablesorter) return;
+        
+        $tablesorter = plugins_url( 'js/jquery.tablesorter.min.js', __FILE__);
+        wp_register_script(
+            'tablesorter', $tablesorter, array('jquery'), '2.0.5', true
+        ); 
+        wp_print_scripts( 'tablesorter' );
+        
+        ?>
+        <script>
+        jQuery(function($) {
+            $('.post table').tablesorter();
+        });
+        </script>
+        <?php
     }
     
 }

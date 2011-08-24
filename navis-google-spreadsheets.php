@@ -107,10 +107,12 @@ class Navis_Google_Spreadsheets {
         // Prepend a space character onto the 'class' value, if one exists.
         if (!empty($options['class'])) { $options['class'] = " {$options['class']}"; }
 
-        $html  = "<table id=\"igsv-{$options['key']}\" class=\"igsv-table{$options['class']}\" summary=\"{$options['summary']}\">";
+        $html  = "<table class=\"{$options['class']}\" summary=\"{$options['summary']}\">";
         if (!empty($caption)) {
             $html .= "<caption>$caption</caption>";
         }
+        
+        // thead
         $html .= "<thead><tr class=\"row-$ir " . $this->odd_even($ir) . "\">";
         $ir++;
         $table_head = array_shift($rows);
@@ -118,7 +120,10 @@ class Navis_Google_Spreadsheets {
             $html .= "<th class=\"col-$ic " . $this->odd_even($ic) . "\"><div>$v</div></th>";
             $ic++;
         }
-        $html .= "</tr></thead><tbody>";
+        $html .= "</tr></thead>";
+        
+        // tbody
+        $html .= "<tbody>";
         foreach ($rows as $v) {
             $html .= "<tr class=\"row-$ir " . $this->odd_even($ir) . "\">";
             $ir++;
@@ -129,7 +134,11 @@ class Navis_Google_Spreadsheets {
             }
             $html .= "</tr>";
         }
-        $html .= '</tbody></table>';
+        $html .= '</tbody>';
+        $html .= '</table>';
+        if ($options['source']) {
+            $html .= "<p class=\"source\">Source: {$options['source']}</p>";
+        }
 
         return $html;
     }
@@ -145,9 +154,10 @@ class Navis_Google_Spreadsheets {
         $options = shortcode_atts(array(
             'key'      => null,                // Google Doc ID
             'url'      => null,
-            'class'    => '',                   // Container element's custom class value
+            'class'    => 'tablesorter',        // Container element's custom class value
             'gid'      => false,                // Sheet ID for a Google Spreadsheet, if only one
             'summary'  => 'Google Spreadsheet', // If spreadsheet, value for summary attribute
+            'source'   => '',
             'strip'    => 0                     // If spreadsheet, how many rows to omit from top
         ), $atts);
         

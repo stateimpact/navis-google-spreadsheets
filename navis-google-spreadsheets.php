@@ -153,7 +153,10 @@ class Navis_Google_Spreadsheets {
         
         $url = $this->get_url($options);
         
+        # wordpress seems to insert junk characters
+        $url = str_replace('#038;', '', $url);
         $rows = get_post_meta($post->ID, $url, true);
+
         if ($rows) return $this->render_table($rows, $options, $content);
     }
     

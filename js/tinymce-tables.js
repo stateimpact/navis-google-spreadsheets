@@ -26,7 +26,7 @@
             ed.addButton('spreadsheet', {
                 title : 'Spreadsheet',
                 cmd : 'spreadsheet',
-                image : url + '/button.png'
+                image : url + '/table.png'
             });
 
             // Add a node change handler, selects the button in the UI when a image is selected

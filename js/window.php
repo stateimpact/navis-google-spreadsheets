@@ -38,6 +38,15 @@ $SITEURL .= $_GET[ 'wpbase' ];
             <label for="source">Source: </label>
             <input type="text" name="source" value="" id="source" />
         </p>
+        <p>
+            <label for="paginate">Paginate: </label>
+            <input type="checkbox" name="paginate" value="1" id="paginate" />
+        </p>
+        <p>
+            <label for="filter">Allow filtering: </label>
+            <input type="checkbox" name="filter" value="1" id="filter" />
+        </p>
+        
         <div class="mceActionPanel">
             <div style="float: left">
                 <input type="button" id="cancel" name="cancel" value="Cancel" />
@@ -76,11 +85,33 @@ $SITEURL .= $_GET[ 'wpbase' ];
         // to postmeta
         $('form#options').submit(function(e) {
             e.preventDefault();
+            /***
             var args = [shortcode_format('key', '"' + $('input#key').val() + '"')];
             var source = $('input#source').val();
             var page = $('input#page').val();
             if (source) args.push(shortcode_format('source', '"' + source + '"'));
             if (page) args.push(shortcode_format('page', page));
+            ***/
+            args = [];
+            // hash of fields: quoted
+            var fields = {
+                'key': true, 
+                'source': true, 
+                'filter': false, 
+                'paginate': false, 
+                'page': false
+            };
+            for (var field in fields) {
+                var value = $('input#' + field).val();
+                if (value) {
+                    if (fields[field]) {
+                        args.push(shortcode_format(field, '"' + value + '"'));
+                    } else {
+                        args.push(shortcode_format(field, value));
+                    }
+                }
+            }
+            console.log(args);
             var shortcode = "[spreadsheet " + args.join(' ') + "]";
             window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, shortcode);
             tinyMCEPopup.editor.execCommand('mceRepaint');

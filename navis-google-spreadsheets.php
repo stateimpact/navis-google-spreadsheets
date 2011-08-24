@@ -129,8 +129,19 @@ class Navis_Google_Spreadsheets {
 
         // Prepend a space character onto the 'class' value, if one exists.
         if (!empty($options['class'])) { $options['class'] = " {$options['class']}"; }
-
-        $html  = "<table class=\"{$options['class']}\" summary=\"{$options['summary']}\">";
+        $classes = array($options['class']);
+        if ($options['paginate']) {
+            array_push($classes, 'paginated');
+        }
+        $classnames = implode(' ', $classes);
+        $html = "";
+        if ($options['filter']) {
+            $html .= "<p class=\"filter\">";
+            $html .= "<label for=\"search\">Search:</label> ";
+            $html .= "<input name=\"search\" type=\"search\" placeholder=\"Search this table\">";
+            $html .= "</p>";
+        }
+        $html  .= "<table class=\"{$classnames}\" summary=\"{$options['summary']}\">";
         if (!empty($caption)) {
             $html .= "<caption>$caption</caption>";
         }
@@ -159,6 +170,20 @@ class Navis_Google_Spreadsheets {
         }
         $html .= '</tbody>';
         $html .= '</table>';
+        if ($options['paginate']) {
+            $html .= '<div class="pager">';
+            $html .= '	<form>';
+            $html .= '		<a href="#" class="prev">Previous</a>';
+            $html .= '		<span class="pagedisplay"></span>';
+            $html .= '		<a href="#" class="next">Next</a>';
+            $html .= '		<select class="pagesize">';
+            $html .= '			<option value="25">25</option>';
+            $html .= '			<option value="50">50</option>';
+            $html .= '			<option  value="100">100</option>';
+            $html .= '		</select>';
+            $html .= '	</form>';
+            $html .= '</div>';
+        }
         if ($options['source']) {
             $html .= "<p class=\"source\">Source: {$options['source']}</p>";
         }
@@ -180,7 +205,9 @@ class Navis_Google_Spreadsheets {
             'class'    => 'tablesorter',        // Container element's custom class value
             'page'      => false,                // Sheet ID for a Google Spreadsheet, if only one
             'summary'  => 'Google Spreadsheet', // If spreadsheet, value for summary attribute
-            'source'   => '',
+            'source'   => '',                   // Source, printed below the table
+            'filter'   => false,                // allow filtering
+            'paginate' => false,             // pagination, off by default
             'strip'    => 0                     // If spreadsheet, how many rows to omit from top
         ), $atts);
         
@@ -205,13 +232,24 @@ class Navis_Google_Spreadsheets {
         
         $tablesorter = plugins_url( 'js/jquery.tablesorter.min.js', __FILE__ );
         $config = plugins_url( 'js/tablesorter-config.js', __FILE__ );
+        $filter = plugins_url( 'js/jquery.tablesorter.multipagefilter.js', __FILE__);
+        $pager = plugins_url( 'js/jquery.tablesorter.pager.js', __FILE__);
         wp_register_script(
             'tablesorter', $tablesorter, array('jquery'), '2.0.5', true
         ); 
         wp_register_script(
-            'tablesorter-config', $config, array('jquery', 'tablesorter'), '0.1', true);
+            'tablesorter-config', $config, array('jquery', 'tablesorter'), '0.1', true
+        );
+        wp_register_script( 
+            'multipagefilter', $filter, array('jquery', 'tablesorter'), '0.1', true
+        );
+        wp_register_script(
+            'tablepager', $pager, array('jquery', 'tablesorter'), '0.1', true
+        );
         wp_print_scripts( 'tablesorter' );
         wp_print_scripts( 'tablesorter-config' );
+        wp_print_scripts( 'multipagefilter' );
+        wp_print_scripts( 'tablepager' );
 
     }
     

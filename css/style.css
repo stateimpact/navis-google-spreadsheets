@@ -17,3 +17,26 @@
 .post table thead tr .headerSortDown, .post table thead tr .headerSortUp {
     background-color: #8dbdd8;
 }
+
+.pager {
+	padding: 10px 0 10px 0;
+	background-color: #D6D2C2;
+	text-align: center;
+}
+.pager span {
+	padding: 0 5px 0 5px;
+}
+.pager input.prev {
+	width: auto;
+	margin-right: 10px;
+}
+.pager input.next {
+	width: auto;
+	margin-left: 10px;
+}
+.pager input {
+	font-size: 8px;
+	width: 50px;
+	border: 1px solid #330000;
+	text-align: center;
+}

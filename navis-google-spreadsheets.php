@@ -38,10 +38,33 @@ class Navis_Google_Spreadsheets {
         
         add_action('save_post', array(&$this, 'save'));
         
+        add_action( 'init', array(&$this, 'register_tinymce_filters'));
+        
         add_filter('wp_footer', array(&$this, 'include_dependencies'));
         
         add_shortcode('spreadsheet', array(&$this, 'shortcode'));
         
+    }
+    
+    function register_tinymce_filters() {
+        add_filter('mce_external_plugins', 
+            array(&$this, 'add_tinymce_plugin')
+        );
+        add_filter('mce_buttons', 
+            array(&$this, 'register_button')
+        );
+        
+    }
+        
+    function add_tinymce_plugin($plugin_array) {
+        $plugin_array['spreadsheet'] = plugins_url(
+            'js/tinymce-tables.js', __FILE__);
+        return $plugin_array;
+    }
+    
+    function register_button($buttons) {
+        array_push($buttons, '|', "spreadsheet");
+        return $buttons;
     }
     
     function save($post_id) {

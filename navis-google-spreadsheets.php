@@ -55,7 +55,7 @@ class Navis_Google_Spreadsheets {
         );
         
     }
-        
+    
     function add_tinymce_plugin($plugin_array) {
         $plugin_array['spreadsheet'] = plugins_url(
             'js/tinymce-tables.js', __FILE__);
@@ -96,8 +96,8 @@ class Navis_Google_Spreadsheets {
     function get_url($options) {
         if ($options['key']) {
             $url = "https://spreadsheets.google.com/pub?key={$options['key']}&output=csv";
-            if ($options['gid']) {
-                $url .= "&single=true&gid={$options['gid']}";
+            if ($options['page']) {
+                $url .= "&single=true&gid={$options['page']}";
             }
         } else {
             $url = $options['url'];
@@ -178,7 +178,7 @@ class Navis_Google_Spreadsheets {
             'key'      => null,                // Google Doc ID
             'url'      => null,
             'class'    => 'tablesorter',        // Container element's custom class value
-            'gid'      => false,                // Sheet ID for a Google Spreadsheet, if only one
+            'page'      => false,                // Sheet ID for a Google Spreadsheet, if only one
             'summary'  => 'Google Spreadsheet', // If spreadsheet, value for summary attribute
             'source'   => '',
             'strip'    => 0                     // If spreadsheet, how many rows to omit from top

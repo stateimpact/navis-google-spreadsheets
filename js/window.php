@@ -26,6 +26,14 @@ $SITEURL .= $_GET[ 'wpbase' ];
             <label for="url">Spreadsheet CSV URL: </label>
             <input type="text" name="url" value="" id="url" />
         </p>
+        <p>                
+            <label for="key">Spreadsheet key: </label>
+            <input type="text" name="key" value="" id="key" />
+        </p>
+        <p>                
+            <label for="url">Page: </label>
+            <input type="text" name="page" value="" id="page" />
+        </p>
         <p>
             <label for="source">Source: </label>
             <input type="text" name="source" value="" id="source" />
@@ -48,6 +56,18 @@ $SITEURL .= $_GET[ 'wpbase' ];
         var inst = tinyMCE.getInstanceById('content');
         var html = inst.selection.getContent();
         
+        $('input#url').change(function(e) {
+            var key, page, url;
+            url = $(this).val();
+            if (!url) return;
+            key = url.match(/key=\w+/)[0];
+            page = url.match(/gid=\d+/)[0];
+            if (!key || key === undefined) return;
+            
+            $('#key').val(key.split('=')[1]);
+            $('#page').val(page.split('=')[1]);
+        });
+        
         $('#cancel').click(function() {
             tinyMCEPopup.close();
         });
@@ -56,9 +76,11 @@ $SITEURL .= $_GET[ 'wpbase' ];
         // to postmeta
         $('form#options').submit(function(e) {
             e.preventDefault();
-            var args = [shortcode_format('url', '"' + $('input#url').val() + '"')];
+            var args = [shortcode_format('key', '"' + $('input#key').val() + '"')];
             var source = $('input#source').val();
+            var page = $('input#page').val();
             if (source) args.push(shortcode_format('source', '"' + source + '"'));
+            if (page) args.push(shortcode_format('page', page));
             var shortcode = "[spreadsheet " + args.join(' ') + "]";
             window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, shortcode);
             tinyMCEPopup.editor.execCommand('mceRepaint');

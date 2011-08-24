@@ -203,19 +203,16 @@ class Navis_Google_Spreadsheets {
     function include_dependencies() {
         if (!self::$include_tablesorter) return;
         
-        $tablesorter = plugins_url( 'js/jquery.tablesorter.min.js', __FILE__);
+        $tablesorter = plugins_url( 'js/jquery.tablesorter.min.js', __FILE__ );
+        $config = plugins_url( 'js/tablesorter-config.js', __FILE__ );
         wp_register_script(
             'tablesorter', $tablesorter, array('jquery'), '2.0.5', true
         ); 
+        wp_register_script(
+            'tablesorter-config', $config, array('jquery', 'tablesorter'), '0.1', true);
         wp_print_scripts( 'tablesorter' );
-        
-        ?>
-        <script>
-        jQuery(function($) {
-            $('.post table').tablesorter();
-        });
-        </script>
-        <?php
+        wp_print_scripts( 'tablesorter-config' );
+
     }
     
 }

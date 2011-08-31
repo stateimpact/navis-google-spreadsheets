@@ -96,7 +96,7 @@ class Navis_Google_Spreadsheets {
     function get_url($options) {
         if ($options['key']) {
             $url = "https://spreadsheets.google.com/pub?key={$options['key']}&output=csv";
-            if ($options['page']) {
+            if ($options['page'] !== null) {
                 $url .= "&single=true&gid={$options['page']}";
             }
         } else {
@@ -203,7 +203,7 @@ class Navis_Google_Spreadsheets {
             'key'      => null,                // Google Doc ID
             'url'      => null,
             'class'    => 'tablesorter',        // Container element's custom class value
-            'page'      => false,                // Sheet ID for a Google Spreadsheet, if only one
+            'page'      => null,                // Sheet ID for a Google Spreadsheet, if only one
             'summary'  => 'Google Spreadsheet', // If spreadsheet, value for summary attribute
             'source'   => '',                   // Source, printed below the table
             'filter'   => false,                // allow filtering

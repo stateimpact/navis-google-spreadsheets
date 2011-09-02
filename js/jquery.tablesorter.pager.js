@@ -67,6 +67,8 @@
 				}
 				
 				renderTable(table,c.rowsCopy);
+				var offset = $(table).offset();
+				$(window).scrollTop(offset.top - 50);
 			}
 			
 			function renderTable(table,rows) {

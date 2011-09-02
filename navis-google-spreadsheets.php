@@ -136,10 +136,30 @@ class Navis_Google_Spreadsheets {
         $classnames = implode(' ', $classes);
         $html = "";
         if ($options['filter']) {
-            $html .= "<p class=\"filter\">";
+            $html .= "<p class=\"table-filter\">";
             $html .= "<label for=\"search\">Search:</label> ";
             $html .= "<input name=\"search\" type=\"search\" placeholder=\"Search this table\">";
             $html .= "</p>";
+        }
+        if ($options['paginate']) {
+            $html .= '<div class="pager">';
+            $html .= '  <form>';
+            $html .= '      <div class="pagenav-wrapper">';
+            $html .= '          <a href="#" class="prev">Previous</a>';
+            $html .= '          <span class="pagedisplay"></span>';
+            $html .= '          <a href="#" class="next">Next</a>';
+            $html .= '      </div>';
+            $html .= '      <div class="pagesize-wrapper">';
+            $html .= '          <span>Show </span>';
+            $html .= '          <select class="pagesize">';
+            $html .= '             <option value="25">25</option>';
+            $html .= '             <option value="50">50</option>';
+            $html .= '             <option  value="100">100</option>';
+            $html .= '          </select>';
+            $html .= '          <span> rows.</span>';
+            $html .= '      </div>';
+            $html .= '  </form>';
+            $html .= '</div>';
         }
         $html  .= "<table class=\"{$classnames}\" summary=\"{$options['summary']}\">";
         if (!empty($caption)) {
@@ -172,18 +192,14 @@ class Navis_Google_Spreadsheets {
         $html .= '</table>';
         if ($options['paginate']) {
             $html .= '<div class="pager">';
-            $html .= '	<form>';
-            $html .= '		<a href="#" class="prev">Previous</a>';
-            $html .= '		<span class="pagedisplay"></span>';
-            $html .= '		<a href="#" class="next">Next</a>';
-            $html .= '		<select class="pagesize">';
-            $html .= '			<option value="25">25</option>';
-            $html .= '			<option value="50">50</option>';
-            $html .= '			<option  value="100">100</option>';
-            $html .= '		</select>';
-            $html .= '	</form>';
+            $html .= '      <div class="pagenav-wrapper">';
+            $html .= '          <a href="#" class="prev">Previous</a>';
+            $html .= '          <span class="pagedisplay"></span>';
+            $html .= '          <a href="#" class="next">Next</a>';
+            $html .= '      </div>';
             $html .= '</div>';
         }
+
         if ($options['source']) {
             $html .= "<p class=\"source\">Source: {$options['source']}</p>";
         }

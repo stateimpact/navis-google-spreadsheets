@@ -7,7 +7,7 @@ jQuery(function($) {
         }
     })
     .tablesorterMultiPageFilter({
-        filterSelector: $('.filter input')
+        filterSelector: $('.table-filter input')
     });
     
     // paginated

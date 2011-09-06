@@ -15,7 +15,7 @@
                 ed.windowManager.open({
                     file : url + '/window.php?wpbase=' + userSettings.url,
                     width : 400,
-                    height : 300,
+                    height : 400,
                     inline : 1
                 }, {
                     plugin_url : url 

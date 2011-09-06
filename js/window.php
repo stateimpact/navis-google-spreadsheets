@@ -15,38 +15,65 @@ $SITEURL .= $_GET[ 'wpbase' ];
     <script src="<?php echo $SITEURL; ?>wp-includes/js/tinymce/tiny_mce_popup.js"></script>
     <script src="<?php echo $SITEURL; ?>wp-includes/js/tinymce/utils/form_utils.js"></script>
     <style>
+    div {
+        margin-bottom: 1.5em;
+    }
     form p {
-        font-size: 1.5em;
+        font-size: 1.25em;
+        margin-bottom: .5em;
+        margin-top: .25em;
+    }
+    
+    form p.help {
+        font-size: 1em;
+        color: #555;
     }
     </style>
 </head>
 <body onload="tinyMCEPopup.executeOnLoad('init();)'); document.body.style.display='';">
     <form id="options">
-        <p>                
-            <label for="url">Spreadsheet CSV URL: </label>
-            <input type="text" name="url" value="" id="url" />
-        </p>
-        <p>                
-            <label for="key">Spreadsheet key: </label>
-            <input type="text" name="key" value="" id="key" />
-        </p>
-        <p>                
-            <label for="url">Page: </label>
-            <input type="text" name="page" value="" id="page" />
-        </p>
-        <p>
-            <label for="source">Source: </label>
-            <input type="text" name="source" value="" id="source" />
-        </p>
-        <p>
-            <label for="paginate">Paginate: </label>
-            <input type="checkbox" name="paginate" value="1" id="paginate" />
-        </p>
-        <p>
-            <label for="filter">Allow filtering: </label>
-            <input type="checkbox" name="filter" value="1" id="filter" />
-        </p>
-        
+        <div>
+            <p>                
+                <label for="url">Google Spreadsheet URL: </label>
+                <input type="text" name="url" value="" id="url" />
+            </p>
+            <p class="help">Paste in a spreadsheet URL. Key and sheet (below) will be filled in automatically.</p>
+        </div>
+        <div>
+            <p>                
+                <label for="key">Spreadsheet key: </label>
+                <input type="text" name="key" value="" id="key" />
+            </p>
+            <p class="help">Add a URL (above) to set this automatically. Only change this field if you know what you're doing.</p>
+        </div>
+        <div>
+            <p>                
+                <label for="url">Sheet: </label>
+                <input type="text" name="sheet" value="" id="sheet" />
+            </p>
+            <p class="help">Zero indexed, so sheet zero is first, one is second, etc</p>
+        </div>
+        <div>
+            <p>
+                <label for="source">Source: </label>
+                <input type="text" name="source" value="" id="source" />
+            </p>
+            <p class="help">Where did you get this data?</p>
+        </div>
+        <div>
+            <p>
+                <label for="paginate">Paginate: </label>
+                <input type="checkbox" name="paginate" value="1" checked="checked" id="paginate" />
+            </p>
+            <p class="help">Split display into 25-row pages.</p>
+        </div>
+        <div>
+            <p>
+                <label for="filter">Allow filtering: </label>
+                <input type="checkbox" name="filter" value="1" id="filter" />
+            </p>
+            <p class="help">Check this box to allow users to search this table.</p>
+        </div>
         <div class="mceActionPanel">
             <div style="float: left">
                 <input type="button" id="cancel" name="cancel" value="Cancel" />
@@ -74,7 +101,7 @@ $SITEURL .= $_GET[ 'wpbase' ];
             if (!key || key === undefined) return;
             
             $('#key').val(key.split('=')[1]);
-            $('#page').val(page.split('=')[1]);
+            $('#sheet').val(page.split('=')[1]);
         });
         
         $('#cancel').click(function() {
@@ -85,21 +112,14 @@ $SITEURL .= $_GET[ 'wpbase' ];
         // to postmeta
         $('form#options').submit(function(e) {
             e.preventDefault();
-            /***
-            var args = [shortcode_format('key', '"' + $('input#key').val() + '"')];
-            var source = $('input#source').val();
-            var page = $('input#page').val();
-            if (source) args.push(shortcode_format('source', '"' + source + '"'));
-            if (page) args.push(shortcode_format('page', page));
-            ***/
             args = [];
-            // hash of fields: quoted
+            // hash of field: quoted
             var fields = {
                 'key': true, 
                 'source': true, 
                 'filter': false, 
                 'paginate': false, 
-                'page': false
+                'sheet': false
             };
             for (var field in fields) {
                 var value = $('input#' + field).val();

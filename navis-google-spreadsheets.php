@@ -224,9 +224,13 @@ class Navis_Google_Spreadsheets {
             'source'   => '',                   // Source, printed below the table
             'filter'   => false,                // allow filtering
             'paginate' => false,             // pagination, off by default
-            'strip'    => 0                     // If spreadsheet, how many rows to omit from top
+            'strip'    => 0,                     // If spreadsheet, how many rows to omit from top
+            'page'     => null              // here for backwards compatability
         ), $atts);
         
+        if ($options['page'] !== null) {
+            $options['sheet'] = $options['page'];
+        }
         $url = $this->get_url($options);
         
         # wordpress seems to insert junk characters

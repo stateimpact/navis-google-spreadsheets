@@ -1,12 +1,17 @@
 jQuery(function($) {
     // basic
-    var tables = $('.post table').tablesorter({ 
+    var tables = $('.post table');
+    
+    // sorting
+    tables.filter('.sortable').tablesorter({ 
         textExtraction: function(node) {
             var text = $(node).text();
             return text.replace(/,|\$|%/g, '');
         }
-    })
-    .tablesorterMultiPageFilter({
+    });
+    
+    // filtered
+    tables.filter('.filter').tablesorterMultiPageFilter({
         filterSelector: $('.table-filter input')
     });
     

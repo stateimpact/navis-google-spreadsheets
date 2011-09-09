@@ -133,6 +133,15 @@ class Navis_Google_Spreadsheets {
         if ($options['paginate']) {
             array_push($classes, 'paginated');
         }
+        
+        if ($options['filter']) {
+            array_push($classes, 'filter');
+        }
+        
+        if ($options['sortable']) {
+            array_push($classes, 'sortable');
+        }
+        
         $classnames = implode(' ', $classes);
         $html = "";
         if ($options['filter']) {
@@ -214,7 +223,7 @@ class Navis_Google_Spreadsheets {
     function shortcode($atts, $content = null) {
         global $post;
         self::$include_tablesorter = true;
-        
+                
         $options = shortcode_atts(array(
             'key'      => null,                // Google Doc ID
             'url'      => null,
@@ -222,6 +231,7 @@ class Navis_Google_Spreadsheets {
             'sheet'    => null,                // Sheet ID for a Google Spreadsheet, if only one
             'summary'  => 'Google Spreadsheet', // If spreadsheet, value for summary attribute
             'source'   => '',                   // Source, printed below the table
+            'sortable' => true,
             'filter'   => false,                // allow filtering
             'paginate' => false,             // pagination, off by default
             'strip'    => 0,                     // If spreadsheet, how many rows to omit from top
@@ -232,11 +242,12 @@ class Navis_Google_Spreadsheets {
             $options['sheet'] = $options['page'];
         }
         $url = $this->get_url($options);
-        
+        error_log($url);
+
         # wordpress seems to insert junk characters
         $url = str_replace('#038;', '', $url);
         $rows = get_post_meta($post->ID, $url, true);
-
+        
         if ($rows) return $this->render_table($rows, $options, $content);
     }
     

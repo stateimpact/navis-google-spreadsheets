@@ -144,19 +144,19 @@ class Navis_Google_Spreadsheets {
         
         $classnames = implode(' ', $classes);
         $html = "";
-        if ($options['filter']) {
+        if ($options['filter'] && $options['sortable']) {
             $html .= "<p class=\"table-filter\">";
             $html .= "<label for=\"search\">Search:</label> ";
             $html .= "<input name=\"search\" type=\"search\" placeholder=\"Search this table\">";
             $html .= "</p>";
         }
-        if ($options['paginate']) {
+        if ($options['paginate'] && $options['sortable']) {
             $html .= '<div class="pager">';
             $html .= '  <form>';
             $html .= '      <div class="pagenav-wrapper">';
             $html .= '          <a href="#" class="prev">Previous</a>';
-            $html .= '          <span class="pagedisplay"></span>';
             $html .= '          <a href="#" class="next">Next</a>';
+            $html .= '          <input type="text" class="pagedisplay" readonly="readonly"/>';
             $html .= '      </div>';
             $html .= '      <div class="pagesize-wrapper">';
             $html .= '          <span>Show </span>';

@@ -62,12 +62,19 @@ $SITEURL .= $_GET[ 'wpbase' ];
         </div>
         <div>
             <p>
+                <label for="sortable">Sortable: </label>
+                <input type="checkbox" name="sortable" value="1" id="sortable" checked="checked"/>
+            </p>
+            <p class="help">Disable sorting. Note that this also disables pagination and filtering.</p>
+        </div>
+        <div class="requires-sortable">
+            <p>
                 <label for="paginate">Paginate: </label>
                 <input type="checkbox" name="paginate" value="1" checked="checked" id="paginate" />
             </p>
             <p class="help">Split display into 25-row pages.</p>
         </div>
-        <div>
+        <div class="requires-sortable">
             <p>
                 <label for="filter">Allow filtering: </label>
                 <input type="checkbox" name="filter" value="1" id="filter" />
@@ -104,6 +111,14 @@ $SITEURL .= $_GET[ 'wpbase' ];
             $('#sheet').val(page.split('=')[1]);
         });
         
+        $('input#sortable').change(function(e) {
+            if ( !$(this).attr('checked') ) {
+                $('.requires-sortable').hide();
+            } else {
+                $('.requires-sortable').show();
+            }
+        });
+        
         $('#cancel').click(function() {
             tinyMCEPopup.close();
         });
@@ -119,8 +134,34 @@ $SITEURL .= $_GET[ 'wpbase' ];
                 'source': true, 
                 'filter': false, 
                 'paginate': false, 
-                'sheet': false
+                'sheet': false,
+                'sortable': false
             };
+            
+            var textfields = ['key', 'source'];
+            var checkfields = ['filter', 'paginate', 'sortable']
+            
+            // key and source
+            for (var i in textfields) {
+                var field = textfields[i];
+                var value = $('input#' + field).val();
+                args.push(shortcode_format(field, '"' + value + '"'));
+            };
+            
+            // sheet
+            var sheet = $('input#sheet').val();
+            if (sheet) {
+                args.push(shortcode_format('sheet', sheet));
+            }
+            
+            // sortable, paginate, filter
+            $('input:checked').each(function(i) {
+                var field = $(this).attr('name');
+                var value = $(this).val();
+                args.push(shortcode_format(field, value));
+            });
+            
+            /***
             for (var field in fields) {
                 var value = $('input#' + field).val();
                 if (value) {
@@ -131,8 +172,10 @@ $SITEURL .= $_GET[ 'wpbase' ];
                     }
                 }
             }
+            
+            ***/
             console.log(args);
-            var shortcode = "[spreadsheet " + args.join(' ') + "]";
+            var shortcode = "[spreadsheet " + $.trim(args.join(' ')) + "]";
             window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, shortcode);
             tinyMCEPopup.editor.execCommand('mceRepaint');
             tinyMCEPopup.close();

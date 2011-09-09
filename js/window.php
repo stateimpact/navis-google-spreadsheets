@@ -128,15 +128,6 @@ $SITEURL .= $_GET[ 'wpbase' ];
         $('form#options').submit(function(e) {
             e.preventDefault();
             args = [];
-            // hash of field: quoted
-            var fields = {
-                'key': true, 
-                'source': true, 
-                'filter': false, 
-                'paginate': false, 
-                'sheet': false,
-                'sortable': false
-            };
             
             var textfields = ['key', 'source'];
             var checkfields = ['filter', 'paginate', 'sortable']
@@ -155,25 +146,15 @@ $SITEURL .= $_GET[ 'wpbase' ];
             }
             
             // sortable, paginate, filter
-            $('input:checked').each(function(i) {
-                var field = $(this).attr('name');
-                var value = $(this).val();
-                args.push(shortcode_format(field, value));
-            });
-            
-            /***
-            for (var field in fields) {
-                var value = $('input#' + field).val();
-                if (value) {
-                    if (fields[field]) {
-                        args.push(shortcode_format(field, '"' + value + '"'));
-                    } else {
-                        args.push(shortcode_format(field, value));
-                    }
+            for (var i in checkfields) {
+                var field = checkfields[i];
+                if ($('#' + field).is(':checked')) {
+                    args.push(shortcode_format(field, 1));
+                } else {
+                    args.push(shortcode_format(field, 0));
                 }
             }
             
-            ***/
             console.log(args);
             var shortcode = "[spreadsheet " + $.trim(args.join(' ')) + "]";
             window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, shortcode);

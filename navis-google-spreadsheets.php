@@ -155,8 +155,8 @@ class Navis_Google_Spreadsheets {
             $html .= '  <form>';
             $html .= '      <div class="pagenav-wrapper">';
             $html .= '          <a href="#" class="prev">Previous</a>';
-            $html .= '          <a href="#" class="next">Next</a>';
             $html .= '          <input type="text" class="pagedisplay" readonly="readonly"/>';
+            $html .= '          <a href="#" class="next">Next</a>';
             $html .= '      </div>';
             $html .= '      <div class="pagesize-wrapper">';
             $html .= '          <span>Show </span>';

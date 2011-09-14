@@ -153,11 +153,6 @@ class Navis_Google_Spreadsheets {
         if ($options['paginate'] && $options['sortable']) {
             $html .= '<div class="pager">';
             $html .= '  <form>';
-            $html .= '      <div class="pagenav-wrapper">';
-            $html .= '          <a href="#" class="prev">Previous</a>';
-            $html .= '          <input type="text" class="pagedisplay" readonly="readonly"/>';
-            $html .= '          <a href="#" class="next">Next</a>';
-            $html .= '      </div>';
             $html .= '      <div class="pagesize-wrapper">';
             $html .= '          <span>Show </span>';
             $html .= '          <select class="pagesize">';
@@ -203,7 +198,7 @@ class Navis_Google_Spreadsheets {
             $html .= '<div class="pager">';
             $html .= '      <div class="pagenav-wrapper">';
             $html .= '          <a href="#" class="prev">Previous</a>';
-            $html .= '          <span class="pagedisplay"></span>';
+            $html .= '          <input type="text" class="pagedisplay" readonly="readonly"/>';
             $html .= '          <a href="#" class="next">Next</a>';
             $html .= '      </div>';
             $html .= '</div>';

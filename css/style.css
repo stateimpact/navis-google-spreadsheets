@@ -40,11 +40,3 @@
 	border: 1px solid #330000;
 	text-align: center;
 }
-
-#content input.pagedisplay {
-    width: 50px;
-    box-shadow: none;
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    border: none;
-}

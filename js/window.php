@@ -113,7 +113,9 @@ $SITEURL .= $_GET[ 'wpbase' ];
         
         $('input#sortable').change(function(e) {
             if ( !$(this).attr('checked') ) {
-                $('.requires-sortable').hide();
+                $('.requires-sortable').hide()
+                    .find('input[type=checkbox]')
+                    .attr('checked', false);
             } else {
                 $('.requires-sortable').show();
             }
@@ -155,7 +157,6 @@ $SITEURL .= $_GET[ 'wpbase' ];
                 }
             }
             
-            console.log(args);
             var shortcode = "[spreadsheet " + $.trim(args.join(' ')) + "]";
             window.tinyMCE.execInstanceCommand('content', 'mceInsertContent', false, shortcode);
             tinyMCEPopup.editor.execCommand('mceRepaint');

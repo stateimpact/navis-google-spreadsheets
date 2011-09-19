@@ -34,15 +34,10 @@
 	width: auto;
 	margin-left: 10px;
 }
-.pager input {
-	font-size: 8px;
-	width: 50px;
-	border: 1px solid #330000;
-	text-align: center;
-}
 
 #content input.pagedisplay {
     width: 50px;
+    text-align: center;
     box-shadow: none;
     -moz-box-shadow: none;
     -webkit-box-shadow: none;

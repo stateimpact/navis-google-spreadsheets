@@ -237,7 +237,6 @@ class Navis_Google_Spreadsheets {
             $options['sheet'] = $options['page'];
         }
         $url = $this->get_url($options);
-        error_log($url);
 
         # wordpress seems to insert junk characters
         $url = str_replace('#038;', '', $url);

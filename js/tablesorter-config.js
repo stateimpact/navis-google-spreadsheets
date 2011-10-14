@@ -1,9 +1,9 @@
 jQuery(function($) {
     // basic
-    var tables = $('.post table');
+    var tables = $('table.sortable');
     
     // sorting
-    tables.filter('.sortable').tablesorter({ 
+    tables.tablesorter({ 
         textExtraction: function(node) {
             var text = $(node).text();
             return text.replace(/,|\$|%/g, '');

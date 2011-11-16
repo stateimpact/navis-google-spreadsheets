@@ -19,7 +19,7 @@ jQuery(function($) {
     tables.filter('.paginated').tablesorterPager({
         container: $(".pager"),
         positionFixed: false,
-        size: 25,
+        size: 25
     });
     
 });

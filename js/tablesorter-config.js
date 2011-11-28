@@ -4,6 +4,8 @@ jQuery(function($) {
     
     // sorting
     tables.filter('.sortable').tablesorter({ 
+        widgets: ['zebra'],
+        widthFixed: true,
         textExtraction: function(node) {
             var text = $(node).text();
             return text.replace(/,|\$|%/g, '');

@@ -146,8 +146,8 @@ class Navis_Google_Spreadsheets {
         $html = "";
         if ($options['filter'] && $options['sortable']) {
             $html .= "<p class=\"table-filter\">";
-            $html .= "<label for=\"search\">Search:</label> ";
-            $html .= "<input name=\"search\" type=\"search\" placeholder=\"Search this table\">";
+            $html .= "<label for=\"search\">Filter:</label> ";
+            $html .= "<input name=\"search\" type=\"search\">";
             $html .= "</p>";
         }
         if ($options['paginate'] && $options['sortable']) {

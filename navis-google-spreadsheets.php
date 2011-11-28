@@ -237,7 +237,6 @@ class Navis_Google_Spreadsheets {
             $options['sheet'] = $options['page'];
         }
         $url = $this->get_url($options);
-        error_log($url);
 
         # wordpress seems to insert junk characters
         $url = str_replace('#038;', '', $url);
@@ -249,7 +248,7 @@ class Navis_Google_Spreadsheets {
     function add_stylesheet() {
         $css = plugins_url( 'css/style.css', __FILE__);
         wp_enqueue_style(
-            'tablesorter', $css, array(), '2.0.5'
+            'tablesorter', $css, array(), '2.0.6'
         );
     }
     
@@ -264,7 +263,7 @@ class Navis_Google_Spreadsheets {
             'tablesorter', $tablesorter, array('jquery'), '2.0.5', true
         ); 
         wp_register_script(
-            'tablesorter-config', $config, array('jquery', 'tablesorter'), '0.1', true
+            'tablesorter-config', $config, array('jquery', 'tablesorter'), '0.2', true
         );
         wp_register_script( 
             'multipagefilter', $filter, array('jquery', 'tablesorter'), '0.1', true

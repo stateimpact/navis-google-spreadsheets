@@ -1,6 +1,6 @@
 jQuery(function($) {
     // basic
-    var tables = $('.post table');
+    var tables = $('table.sortable');
     
     // sorting
     tables.filter('.sortable').tablesorter({ 
@@ -21,7 +21,7 @@ jQuery(function($) {
     tables.filter('.paginated').tablesorterPager({
         container: $(".pager"),
         positionFixed: false,
-        size: 25,
+        size: 25
     });
     
 });

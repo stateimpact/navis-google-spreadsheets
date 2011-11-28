@@ -1,20 +1,20 @@
 /* tables */
-.post table thead tr .header {
+table.sortable thead tr .header {
 	background-image: url(bg.gif);
 	background-repeat: no-repeat;
 	background-position: center right;
 	cursor: pointer;
 }
-.post table thead tr th div {
+table.sortable thead tr th div {
     margin-right: 1em;
 }
-.post table thead tr .headerSortUp {
+table.sortable thead tr .headerSortUp {
 	background-image: url(asc.gif);
 }
-.post table thead tr .headerSortDown {
+table.sortable thead tr .headerSortDown {
 	background-image: url(desc.gif);
 }
-.post table thead tr .headerSortDown, .post table thead tr .headerSortUp {
+table.sortable thead tr .headerSortDown, .post table thead tr .headerSortUp {
     background-color: #8dbdd8;
 }
 
